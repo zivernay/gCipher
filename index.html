@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Gronsfeld Cipher</title>
+        <meta charset="utf-8">
+        <style>
+            .input{
+                background: linear-gradient(#e66465, #9198e5);
+                font-size: larger;
+                position: fixed;
+            }
+            #output{
+                background: linear-gradient(rgba(66, 70, 63, 0.5), #eee);
+                padding: 1em;
+                color: black;
+                margin-top: 30px;
+            }
+            p{
+                background-color: rgb(201, 201, 201);
+            }
+            button{
+                display: none;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="input">
+            <input type="file" name='inputFile' required id="inputFile">
+            <button onclick="encrypt()" id="encrypt">encrypt</button>
+            <button onclick="decrypt()" id="decrypt">decrypt</button>
+        </div>
+        <div id="output">
+            <p id="plain"></p>
+        </div>
+
+        <script src="js/gCipher.js"></script>
+    </body>
+</html>
