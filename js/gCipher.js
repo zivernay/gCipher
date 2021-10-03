@@ -65,8 +65,7 @@ const gCipher = function(text, key, func, printAll = true ){
             document.body.removeChild(elem);
           }
         }
-        save('newFile.txt', transformedText);
-
+        save(fileName, transformedText.join(''));
     }
     return (transformedText.join(""))
 };
@@ -77,6 +76,8 @@ const decr = document.getElementById('decrypt');
 const plainTextPara = document.getElementById('plain');
 const output = document.getElementById("output");
 let text;
+let fileName;
+
 
 fileUpload.addEventListener('change', () => {
 
@@ -103,6 +104,7 @@ encr.addEventListener('onclick', () => {
 function encrypt(){
     let key = prompt('Enter encryption key');
     console.log(key);
+    fileName = `${fileUpload.files[0].name.split('.')[0]}_encrypted.txt`
     let transformed = gCipher(text, key, 'encrypt');
     let outputPara = document.createElement("p");
     outputPara.innerHTML = transformed;
@@ -111,6 +113,7 @@ function encrypt(){
 function decrypt(){
     let key = prompt('Enter decryption key');
     console.log(key);
+    fileName = `${fileUpload.files[0].name.split('.')[0]}_decrypted.txt`
     let transformed = gCipher(text, key, 'decrypt');
     let outputPara = document.createElement("p");
     outputPara.innerHTML = transformed;
