@@ -26,17 +26,16 @@ const gCipher = function(text, key, func, printAll = true ){
         let charCode = text.charCodeAt(i);
         if (text[i] === ' ' || text[i] === '\n'){
             transformedText.push(text[i]);
-            j--;
+            i++;
+            continue
         } else if (charCode >= 65 && charCode <= 90){
             transformedText.push(method(charCode, key, 65, 90));
         } else if (charCode >= 97 && charCode <= 122){
             transformedText.push(method(charCode, key, 97, 122));
         } else if (charCode >= 48 && charCode <= 58){
             transformedText.push(method(charCode, key, 48, 57))
-        } else if (charCode >= 0 && charCode <=255){
-            transformedText.push(method(charCode, key, 0, 255));
         } else {
-            transformedText.push('#')
+            transformedText.push(text[i])
         }
     
         i++;
@@ -50,6 +49,22 @@ const gCipher = function(text, key, func, printAll = true ){
         plain text: ${text}
         
         transformed text: ${transformedText.join("")}`)
+
+        function save(filename, data) {
+          const blob = new Blob([data], {type: 'text/csv'});
+          if(window.navigator.msSaveOrOpenBlob) {
+            window.navigator.msSaveBlob(blob, filename);
+          }
+          else{
+            const elem = window.document.createElement('a');
+            elem.href = window.URL.createObjectURL(blob);
+            elem.download = filename;        
+            document.body.appendChild(elem);
+            elem.click();        
+            document.body.removeChild(elem);
+          }
+        }
+        save(fileName, transformedText.join(''));
     }
     return (transformedText.join(""))
 };
@@ -60,6 +75,8 @@ const decr = document.getElementById('decrypt');
 const plainTextPara = document.getElementById('plain');
 const output = document.getElementById("output");
 let text;
+let fileName;
+
 
 fileUpload.addEventListener('change', () => {
 
@@ -86,6 +103,7 @@ encr.addEventListener('onclick', () => {
 function encrypt(){
     let key = prompt('Enter encryption key');
     console.log(key);
+    fileName = `${fileUpload.files[0].name.split('.')[0]}_encrypted.txt`
     let transformed = gCipher(text, key, 'encrypt');
     let outputPara = document.createElement("p");
     outputPara.innerHTML = transformed;
@@ -94,6 +112,7 @@ function encrypt(){
 function decrypt(){
     let key = prompt('Enter decryption key');
     console.log(key);
+    fileName = `${fileUpload.files[0].name.split('.')[0]}_decrypted.txt`
     let transformed = gCipher(text, key, 'decrypt');
     let outputPara = document.createElement("p");
     outputPara.innerHTML = transformed;
