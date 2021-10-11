@@ -26,7 +26,8 @@ const gCipher = function(text, key, func, printAll = true ){
         let charCode = text.charCodeAt(i);
         if (text[i] === ' ' || text[i] === '\n'){
             transformedText.push(text[i]);
-            j--;
+            i++;
+            continue
         } else if (charCode >= 65 && charCode <= 90){
             transformedText.push(method(charCode, key, 65, 90));
         } else if (charCode >= 97 && charCode <= 122){
