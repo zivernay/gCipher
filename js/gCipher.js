@@ -33,10 +33,8 @@ const gCipher = function(text, key, func, printAll = true ){
             transformedText.push(method(charCode, key, 97, 122));
         } else if (charCode >= 48 && charCode <= 58){
             transformedText.push(method(charCode, key, 48, 57))
-        } else if (charCode >= 0 && charCode <=255){
-            transformedText.push(method(charCode, key, 0, 255));
         } else {
-            transformedText.push('#')
+            transformedText.push(text[i])
         }
     
         i++;
